@@ -3,7 +3,7 @@
 module.exports = AtomDefaultEncoding =
 
   activate: (state) ->
-    atom.workspace.onDidAddPaneItem (openEventArgs) ->
+    atom.workspace.onDidOpen (openEventArgs) ->
       scopeDescriptor = atom.workspace.getActiveTextEditor()?.getRootScopeDescriptor()
       defaultEncoding = atom.config.get(scopeDescriptor, 'defaultEncoding')
 
