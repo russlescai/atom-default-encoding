@@ -2,4 +2,4 @@
 
 Specify default encodings for a given scope.
 
-![A screenshot of your package](https://github.com/russlescai/atom-default-encoding/blob/master/snapshot-defaultencoding.JPG)
+![A screenshot of your package](https://raw.githubusercontent.com/russlescai/atom-default-encoding/master/snapshot-defaultencoding.JPG)
