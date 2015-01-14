@@ -1,5 +1,5 @@
 {
-  "name": "Default encoding",
+  "name": "default-encoding",
   "main": "./lib/atom-default-encoding",
   "version": "0.0.0",
   "description": "Specify default encodings for a scope.",
