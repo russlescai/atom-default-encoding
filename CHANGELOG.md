@@ -1,3 +1,4 @@
-## 0.1.0 - First Release
+## 0.8.0 - Update Release
 * Every feature added
+ - If no default config is found, try to auto detect encoding for file.
 * Every bug fixed
