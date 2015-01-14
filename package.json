@@ -1,13 +1,12 @@
 {
   "name": "default-encoding",
   "main": "./lib/atom-default-encoding",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Specify default encodings for a scope.",
   "repository": "https://github.com/russlescai/atom-default-encoding",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
