@@ -13,7 +13,7 @@ module.exports = AtomDefaultEncoding =
         editor?.setEncoding(defaultEncoding)
       else
         # No config found, try to autodetect.
-        filePath = editor.getPath()
+        filePath = editor?.getPath()
         return unless fs.existsSync(filePath)
 
         jschardet = require 'jschardet'
@@ -27,4 +27,3 @@ module.exports = AtomDefaultEncoding =
 
           encoding = encoding.toLowerCase().replace(/[^0-9a-z]|:\d{4}$/g, '')
           editor.setEncoding(encoding)
-          console.log encoding
