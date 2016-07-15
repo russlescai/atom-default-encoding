@@ -1,29 +1,34 @@
-fs = require 'fs'
 {CompositeDisposable} = require 'atom'
+EncodingHandler = require './encoding-handler'
 
 module.exports = AtomDefaultEncoding =
+  subscriptions: null
+  encodingHandler: null
 
-  activate: (state) ->
-    atom.workspace.onDidOpen (openEventArgs) ->
-      editor = atom.workspace.getActiveTextEditor()
-      scopeDescriptor = editor?.getRootScopeDescriptor()
-      defaultEncoding = atom.config.get('defaultEncoding', { scope: scopeDescriptor })
+  config:
+    useAutoDetect:
+      title: 'Use Auto Detect'
+      description: 'Auto detect file encoding if default is not configured.'
+      type: 'boolean'
+      default: true
 
-      if defaultEncoding?
-        editor?.setEncoding(defaultEncoding)
-      else
-        # No config found, try to autodetect.
-        filePath = editor?.getPath()
-        return unless fs.existsSync(filePath)
+  activate: ->
+    @enabled();
 
-        jschardet = require 'jschardet'
-        iconv = require 'iconv-lite'
-        fs.readFile filePath, (error, buffer) =>
-          return if error?
+  enabled: ->
+    @subscriptions ?= new CompositeDisposable
+    @encodingHandler ?= new EncodingHandler()
 
-          {encoding} =  jschardet.detect(buffer) ? {}
-          encoding = 'utf8' if encoding is 'ascii'
-          return unless iconv.encodingExists(encoding)
+    @subscriptions.add atom.workspace.observeTextEditors => @encodingHandler.handle()
+    @subscriptions.add atom.workspace.onDidChangeActivePaneItem => @encodingHandler.handle()
 
-          encoding = encoding.toLowerCase().replace(/[^0-9a-z]|:\d{4}$/g, '')
-          editor.setEncoding(encoding)
+  disabled: ->
+    @subscriptions?.dispose()
+    @subscriptions = null
+    @encodingHandler = null
+
+  toggle: ->
+    if not @subscriptions?
+      @enabled()
+    else
+      @disabled()
